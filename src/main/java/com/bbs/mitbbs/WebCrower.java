@@ -119,7 +119,7 @@ public class WebCrower {
                         String href = element.attr("href");
                         if(href.startsWith("/user_info/")){
                             String user = element.text();
-                            if(null != user && user.equals("TinyYaya")){
+                            if(null != user && user.equals(author)){
                                 while(!element.tagName().equals("td")){
                                     element = element.parent();
                                 }
@@ -127,7 +127,7 @@ public class WebCrower {
                                 Element td1 = tr.child(2);
                                 Element postLink = td1.getElementsByTag("a").first();
                                 String link = postLink.attr("href");
-                                String message = "link is "+link+ " with topic = 我们 的"+postLink.text();
+                                String message = "link is http://www.mitbbs.com"+link+ " posted by "+author;
                                 EmailHandler.sendEmail(message);
                             }
                             

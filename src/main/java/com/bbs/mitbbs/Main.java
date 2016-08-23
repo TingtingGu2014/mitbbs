@@ -5,6 +5,9 @@
  */
 package com.bbs.mitbbs;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author arronzhao
@@ -12,6 +15,13 @@ package com.bbs.mitbbs;
 public class Main {
     public static void main(String[] args){
         WebCrower crower = new WebCrower();
-        crower.getPostByAuthor("ok");
+        while(true){
+            crower.getPostByAuthor("gttzt");
+            try {
+                Thread.sleep(5000L);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
