@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args){
         WebCrower crower = new WebCrower();
         while(true){
-            crower.getPostByAuthor("gttzt");
+            crower.getPostByAuthor("wiggins");
             try {
                 Thread.sleep(5000L);
             } catch (InterruptedException ex) {

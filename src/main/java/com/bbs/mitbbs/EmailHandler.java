@@ -19,10 +19,10 @@ import javax.mail.internet.MimeMessage;
  * @author arronzhao
  */
 public class EmailHandler {
-    public static void sendEmail(String content){
-        String to = "ztgtt2004@yahoo.com";
+    public static void sendEmail(String author, String content){
+        String to = "gttzt2004@yahoo.com";
 
-        String from = "gttzt2004@yahoo.com";
+        String from = "ztgtt2004@gmail.com";
 
         String host = "localhost";
 
@@ -39,7 +39,7 @@ public class EmailHandler {
 
            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-           message.setSubject("Updated post at mitbbs");
+           message.setSubject(author+" just posted at mitbbs");
 
            message.setText(content);
 

@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -30,6 +31,7 @@ public class WebCrower {
     
     public static final String USER_AGENT = "Mozilla/5.0";
     public static final String url = "http://www.mitbbs.com/bbsdoc/Immigration.html";
+    private List<String> ids = new ArrayList<>();
     
     public StringBuffer getHttpResponse(){
         
@@ -124,11 +126,17 @@ public class WebCrower {
                                     element = element.parent();
                                 }
                                 Element tr = element.parent();
-                                Element td1 = tr.child(2);
-                                Element postLink = td1.getElementsByTag("a").first();
+                                Element td0 = tr.child(0);
+                                String id = td0.text();
+                                if(ids.contains(id)){
+                                    continue;
+                                }
+                                ids.add(id);
+                                Element td2 = tr.child(2);
+                                Element postLink = td2.getElementsByTag("a").first();
                                 String link = postLink.attr("href");
                                 String message = "link is http://www.mitbbs.com"+link+ " posted by "+author;
-                                EmailHandler.sendEmail(message);
+                                EmailHandler.sendEmail(author, message);
                             }
                             
                         }                      
