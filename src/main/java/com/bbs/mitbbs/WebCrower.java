@@ -31,6 +31,7 @@ public class WebCrower {
     
     public static final String USER_AGENT = "Mozilla/5.0";
     public static final String url = "http://www.mitbbs.com/bbsdoc/Immigration.html";
+    //public static final String url = "http://www.mitbbs.com/bbsdoc/Immigration.html";
     private List<String> ids = new ArrayList<>();
     
     public StringBuffer getHttpResponse(){
@@ -126,17 +127,23 @@ public class WebCrower {
                                     element = element.parent();
                                 }
                                 Element tr = element.parent();
-                                Element td0 = tr.child(0);
-                                String id = td0.text();
-                                if(ids.contains(id)){
-                                    continue;
-                                }
-                                ids.add(id);
+//                                Element td0 = tr.child(0);
+//                                String id = td0.text();
+//                                if(ids.contains(id)){
+//                                    continue;
+//                                }
+//                                ids.add(id);
                                 Element td2 = tr.child(2);
                                 Element postLink = td2.getElementsByTag("a").first();
                                 String link = postLink.attr("href");
-                                String message = "link is http://www.mitbbs.com"+link+ " posted by "+author;
-                                EmailHandler.sendEmail(author, message);
+                                String postId = getPostIdByLink(link);
+                                if(ids.contains(postId)){
+                                    continue;
+                                }
+                                ids.add(postId);
+                                String message = "link "+ postId+" is http://www.mitbbs.com"+link+ " posted by "+author;
+                                System.out.println(message);
+//                                EmailHandler.sendEmail(author, message);
                             }
                             
                         }                      
@@ -148,5 +155,19 @@ public class WebCrower {
             return null;
         }
         return null;
+    }
+    
+    public String getPostIdByLink(String link){
+        // link = "/article_t/Immigration/33777501.html;
+    	if(null == link){
+    		return null;
+    	}
+        String[] linkInfo = link.split("/");
+        if(null != linkInfo || linkInfo.length == 3){
+            return linkInfo[linkInfo.length-1].split("\\.")[0];
+        }
+        else{
+            return null;
+        }
     }
 }
