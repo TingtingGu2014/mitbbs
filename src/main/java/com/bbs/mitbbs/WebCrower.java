@@ -106,6 +106,7 @@ public class WebCrower {
     }
     
     public String[] getPostByAuthor(String author){
+        String[] mailInfo = null;
         StringBuffer response = getHttpResponse();
         if(null != response){
             String httpDoc = response.toString();
@@ -142,8 +143,11 @@ public class WebCrower {
                                 }
                                 ids.add(postId);
                                 String message = "link "+ postId+" is http://www.mitbbs.com"+link+ " posted by "+author;
+                                mailInfo = new String[2];
+                                mailInfo[0] = author;
+                                mailInfo[1] = message;
                                 System.out.println(message);
-//                                EmailHandler.sendEmail(author, message);
+                                EmailHandler.sendAwsEmail(mailInfo);
                             }
                             
                         }                      
@@ -152,9 +156,9 @@ public class WebCrower {
             }
         }
         else{
-            return null;
+            return mailInfo;
         }
-        return null;
+        return mailInfo;
     }
     
     public String getPostIdByLink(String link){

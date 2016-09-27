@@ -5,6 +5,8 @@
  */
 package com.bbs.mitbbs;
 
+import com.solomon.aws.service.AwsMailServ;
+import com.solomon.aws.service.AwsUtil;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -48,5 +50,14 @@ public class EmailHandler {
         }catch (MessagingException mex) {
            mex.printStackTrace();
         }
+    }
+    
+    public static void sendAwsEmail(String[] mailInfo){
+        AwsMailServ mailServ = AwsUtil.getAwsMailServ();
+        mailServ.setFrom(AwsUtil.FROM);
+        mailServ.setTo(AwsUtil.TO);
+        mailServ.setTopic(mailInfo[0]);
+        mailServ.setBody(mailInfo[1]);
+        mailServ.sendMail();
     }
 }
