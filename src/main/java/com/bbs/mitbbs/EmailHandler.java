@@ -21,10 +21,12 @@ import javax.mail.internet.MimeMessage;
  * @author arronzhao
  */
 public class EmailHandler {
-    public static void sendEmail(String author, String content){
-        String to = "gttzt2004@yahoo.com";
+    
+    public static final String TO = "gttzt2004@yahoo.com";
 
-        String from = "ztgtt2004@gmail.com";
+    public static final String FROM = "ztgtt2004@gmail.com";
+        
+    public static void sendEmail(String author, String content){
 
         String host = "localhost";
 
@@ -37,9 +39,9 @@ public class EmailHandler {
         try{
            MimeMessage message = new MimeMessage(session);
 
-           message.setFrom(new InternetAddress(from));
+           message.setFrom(new InternetAddress(EmailHandler.FROM));
 
-           message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+           message.addRecipient(Message.RecipientType.TO, new InternetAddress(EmailHandler.TO));
 
            message.setSubject(author+" just posted at mitbbs");
 
@@ -54,8 +56,8 @@ public class EmailHandler {
     
     public static void sendAwsEmail(String[] mailInfo){
         AwsMailServ mailServ = AwsUtil.getAwsMailServ();
-        mailServ.setFrom(AwsUtil.FROM);
-        mailServ.setTo(AwsUtil.TO);
+        mailServ.setFrom(EmailHandler.FROM);
+        mailServ.setTo(EmailHandler.TO);
         mailServ.setTopic(mailInfo[0]);
         mailServ.setBody(mailInfo[1]);
         mailServ.sendMail();
